@@ -6,8 +6,9 @@ const MOVE_LEFT := "move_left"
 const MOVE_RIGHT := "move_right"
 const JUMP := "jump"
 const ATTACK := "attack"
+const CROUCH := "crouch"
 
-const input_types = [MOVE_LEFT, MOVE_RIGHT, JUMP, ATTACK]
+const input_types = [MOVE_LEFT, MOVE_RIGHT, JUMP, ATTACK, CROUCH]
 
 var inputs = []
 
