@@ -185,13 +185,9 @@ collision_mask = 0
 format = 1
 tile_data = PoolIntArray( 196597, 5, 0, 131077, 11, 0, 262128, 5, 0, 262130, 5, 0, 262132, 7, 0, 262135, 8, 0, 262136, 5, 0, 262138, 5, 0, 262140, 5, 0, 262142, 5, 0, 196608, 5, 0, 196610, 5, 0, 196612, 7, 0, 196616, 5, 0, 196618, 5, 0, 196620, 5, 0, 196622, 5, 0, 327669, 10, 0, 327670, 6, 0, 262149, 10, 0 )
 
-[node name="Player" parent="." instance=ExtResource( 1 )]
-collision_layer = 0
-speed = 250
-acceleration = 800
-friction = 1400
-
 [node name="InputController" type="Node" parent="."]
 script = ExtResource( 2 )
 
 [node name="PlayerSelect" type="CanvasLayer" parent="."]
+
+[node name="Player" parent="." instance=ExtResource( 1 )]

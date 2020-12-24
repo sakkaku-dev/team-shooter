@@ -2,6 +2,9 @@ extends Node
 
 class_name PlayerInput
 
+export var joypad_input = false
+export var device_id = 0
+
 const MOVE_LEFT := "move_left"
 const MOVE_RIGHT := "move_right"
 const JUMP := "jump"
@@ -18,7 +21,24 @@ var action_strength = {
 }
 
 
+func _should_handle_event(event: InputEvent) -> bool:
+	if event.device == device_id and joypad_input and _is_joypad_event(event):
+		return true
+	
+	if event.device == device_id and not joypad_input and not _is_joypad_event(event):
+		return true
+	
+	return false
+
+
+func _is_joypad_event(event: InputEvent) -> bool:
+	return event is InputEventJoypadButton or event is InputEventJoypadMotion
+
+
 func handle_input(event: InputEvent) -> void:
+	if not _should_handle_event(event):
+		return
+	
 	_update_action_strength(event)
 	
 	var action = _get_action_for_event(event)
