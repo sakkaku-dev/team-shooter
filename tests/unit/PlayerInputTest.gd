@@ -35,3 +35,17 @@ func test_move_vector():
 
 	player_input.handle_input(release_key(PlayerInput.MOVE_LEFT))
 	assert_eq(player_input.get_move_vector(), Vector2(1, 0))
+	
+
+func test_joypad_motion():
+	# Joypad can set the action strength of left and right in one event
+	var joy = InputEventJoypadMotion.new()
+	joy.axis = JOY_AXIS_0
+	joy.axis_value = 1
+	player_input.handle_input(joy)
+	assert_eq(player_input.get_move_vector(), Vector2(1, 0))
+	
+	joy = InputEventJoypadMotion.new()
+	joy.axis_value = -1
+	player_input.handle_input(joy)
+	assert_eq(player_input.get_move_vector(), Vector2(-1, 0))

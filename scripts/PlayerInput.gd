@@ -8,7 +8,7 @@ const JUMP := "jump"
 const ATTACK := "attack"
 const CROUCH := "crouch"
 
-const input_types = [MOVE_LEFT, MOVE_RIGHT, JUMP, ATTACK, CROUCH]
+const input_types = [MOVE_RIGHT, MOVE_LEFT, JUMP, ATTACK, CROUCH]
 
 var inputs = []
 
@@ -19,23 +19,30 @@ var action_strength = {
 
 
 func handle_input(event: InputEvent) -> void:
+	_update_action_strength(event)
+	
 	var action = _get_action_for_event(event)
 	if action == "":
 		return
 
+	# TODO: handle joypad move events
 	if event.is_action_pressed(action) and not inputs.has(action):
 		inputs.append(action)
 	if event.is_action_released(action) and inputs.has(action):
 		inputs.erase(action)
 
-	if action_strength.has(action):
-		action_strength[action] = event.get_action_strength(action)
+
+func _update_action_strength(event: InputEvent) -> void:
+	for k in action_strength.keys():
+		if event.is_action(k):
+			action_strength[k] = event.get_action_strength(k)
 
 
 func _get_action_for_event(event: InputEvent) -> String:
 	for action in input_types:
 		if event.is_action(action):
 			return action
+
 	return ""
 
 

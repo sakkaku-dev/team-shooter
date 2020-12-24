@@ -14,7 +14,7 @@ onready var animation: PlayerAnimation = $AnimationPlayer
 
 var velocity = Vector2.ZERO
 
-func _unhandled_input(event):
+func _unhandled_input(event: InputEvent):
 	input.handle_input(event)
 
 func _physics_process(delta: float):
