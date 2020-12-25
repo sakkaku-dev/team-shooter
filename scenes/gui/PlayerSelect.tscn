@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/gui/SlideSelect.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/gui/PlayerSelect.gd" type="Script" id=2]
+[ext_resource path="res://assets/gunner-black.png" type="Texture" id=3]
+
+[node name="PlayerSelect" type="MarginContainer"]
+margin_right = 512.0
+margin_bottom = 300.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 512.0
+margin_bottom = 300.0
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
+margin_right = 512.0
+margin_bottom = 48.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/CenterContainer"]
+margin_left = 232.0
+margin_right = 280.0
+margin_bottom = 48.0
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TeamSelect" parent="VBoxContainer" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 52.0
+margin_right = 512.0
+margin_bottom = 84.0
+[connection signal="value_changed" from="VBoxContainer/TeamSelect" to="." method="_on_TeamSelect_value_changed"]
