@@ -7,15 +7,22 @@ export var acceleration = 1000
 export var friction = 1600
 export var jump_force = 1000
 
-onready var input = $PlayerInput
 onready var gravity = ProjectSettings.get_setting("physics/2d/default_gravity") * ProjectSettings.get_setting("physics/2d/default_gravity_vector")
 onready var body = $Body
 onready var animation: PlayerAnimation = $AnimationPlayer
+onready var gun = $Body/GunPoint
 
+var input: PlayerInput
 var velocity = Vector2.ZERO
 
 func _unhandled_input(event: InputEvent):
 	input.handle_input(event)
+	
+
+func _process(delta: float):
+	if input.is_pressed([PlayerInput.ATTACK]):
+		gun.shot()
+
 
 func _physics_process(delta: float):
 	var motion = input.get_move_vector()

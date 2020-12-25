@@ -3,9 +3,7 @@ extends Position2D
 class_name GunPoint
 
 export var firerate = 1.0
-export var input_path: NodePath
 
-onready var input: PlayerInput = get_node(input_path)
 onready var effect = $Effect
 onready var firerate_timer = $Firerate
 onready var effect_timer = $EffectTimer
@@ -15,11 +13,6 @@ var can_shot = true
 
 func _ready():
 	effect.hide()
-
-
-func _process(delta):
-	if input.is_pressed([PlayerInput.ATTACK]):
-		shot()
 
 
 func shot():

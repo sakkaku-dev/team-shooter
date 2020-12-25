@@ -21,6 +21,16 @@ var action_strength = {
 }
 
 
+func _init(event: InputEvent = null):
+	if event != null:
+		joypad_input = _is_joypad_event(event)
+		device_id = event.device
+
+
+func is_player_event(event: InputEvent) -> bool:
+	return joypad_input == _is_joypad_event(event) and device_id == event.device
+
+
 func _should_handle_event(event: InputEvent) -> bool:
 	if event.device == device_id and joypad_input and _is_joypad_event(event):
 		return true
