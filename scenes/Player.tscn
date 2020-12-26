@@ -72,6 +72,7 @@ tracks/0/keys = {
 extents = Vector2( 9, 14 )
 
 [node name="Player" type="KinematicBody2D"]
+collision_layer = 2
 script = ExtResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -84,7 +85,6 @@ script = ExtResource( 4 )
 sprite_path = NodePath("../Body/Sprite")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-current = true
 
 [node name="Body" type="CollisionShape2D" parent="."]
 shape = SubResource( 6 )

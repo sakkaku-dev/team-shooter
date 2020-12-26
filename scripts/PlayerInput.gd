@@ -2,9 +2,6 @@ extends Node
 
 class_name PlayerInput
 
-export var joypad_input = false
-export var device_id = 0
-
 const MOVE_LEFT := "move_left"
 const MOVE_RIGHT := "move_right"
 const JUMP := "jump"
@@ -20,25 +17,20 @@ var action_strength = {
 	MOVE_RIGHT: 0,
 }
 
+# Indicate that this input is a remote input and should not handle the incoming events
+# Input will be send from clients
+var is_remote = false
+var joypad_input = false
+var device_id = 0
 
-func _init(event: InputEvent = null):
-	if event != null:
-		joypad_input = _is_joypad_event(event)
-		device_id = event.device
+func _init(device = 0, joypad = false, is_remote = false):
+	self.device_id = device
+	self.joypad_input = joypad
+	self.is_remote = is_remote
 
 
-func is_player_event(event: InputEvent) -> bool:
+func _is_player_event(event: InputEvent) -> bool:
 	return joypad_input == _is_joypad_event(event) and device_id == event.device
-
-
-func _should_handle_event(event: InputEvent) -> bool:
-	if event.device == device_id and joypad_input and _is_joypad_event(event):
-		return true
-	
-	if event.device == device_id and not joypad_input and not _is_joypad_event(event):
-		return true
-	
-	return false
 
 
 func _is_joypad_event(event: InputEvent) -> bool:
@@ -46,7 +38,7 @@ func _is_joypad_event(event: InputEvent) -> bool:
 
 
 func handle_input(event: InputEvent) -> void:
-	if not _should_handle_event(event):
+	if not _is_player_event(event):
 		return
 	
 	_update_action_strength(event)
@@ -62,11 +54,18 @@ func handle_input(event: InputEvent) -> void:
 		inputs.erase(action)
 
 
+remote func _add_input(action: String):
+	inputs.append(action)
+	
+
+remote func _remove_input(action: String):
+	inputs.erase(action)
+
+
 func _update_action_strength(event: InputEvent) -> void:
 	for k in action_strength.keys():
 		if event.is_action(k):
 			action_strength[k] = event.get_action_strength(k)
-
 
 func _get_action_for_event(event: InputEvent) -> String:
 	for action in input_types:

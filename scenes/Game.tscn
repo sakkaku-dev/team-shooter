@@ -1,7 +1,10 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://scripts/InputManager.gd" type="Script" id=2]
+[ext_resource path="res://scripts/NetworkConnect.gd" type="Script" id=3]
 [ext_resource path="res://assets/tiles.png" type="Texture" id=4]
+[ext_resource path="res://scripts/Server.gd" type="Script" id=5]
+[ext_resource path="res://scripts/Game.gd" type="Script" id=6]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -174,6 +177,10 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 16, 0, 16 )
 11/z_index = 0
 
 [node name="Game" type="Node2D"]
+script = ExtResource( 6 )
+
+[node name="Server" type="Node" parent="."]
+script = ExtResource( 5 )
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource( 8 )
@@ -184,32 +191,88 @@ collision_mask = 0
 format = 1
 tile_data = PoolIntArray( 196597, 5, 0, 131077, 11, 0, 262128, 5, 0, 262130, 5, 0, 262132, 7, 0, 262135, 8, 0, 262136, 5, 0, 262138, 5, 0, 262140, 5, 0, 262142, 5, 0, 196608, 5, 0, 196610, 5, 0, 196612, 7, 0, 196616, 5, 0, 196618, 5, 0, 196620, 5, 0, 196622, 5, 0, 327669, 10, 0, 327670, 6, 0, 262149, 10, 0 )
 
-[node name="InputManager" type="Node" parent="."]
-script = ExtResource( 2 )
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="CenterContainer" type="CenterContainer" parent="InputManager"]
+[node name="NetworkContainer" type="CenterContainer" parent="CanvasLayer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="InputManager/CenterContainer"]
+[node name="NetworkConnect" type="VBoxContainer" parent="CanvasLayer/NetworkContainer"]
+margin_left = 160.0
+margin_top = 126.0
+margin_right = 351.0
+margin_bottom = 174.0
+script = ExtResource( 3 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/NetworkContainer/NetworkConnect"]
+margin_right = 191.0
+margin_bottom = 48.0
+
+[node name="Client" type="VBoxContainer" parent="CanvasLayer/NetworkContainer/NetworkConnect/HBoxContainer"]
+margin_right = 102.0
+margin_bottom = 48.0
+
+[node name="Server" type="HBoxContainer" parent="CanvasLayer/NetworkContainer/NetworkConnect/HBoxContainer/Client"]
+margin_right = 102.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="CanvasLayer/NetworkContainer/NetworkConnect/HBoxContainer/Client/Server"]
+margin_top = 5.0
+margin_right = 40.0
+margin_bottom = 19.0
+text = "Server"
+
+[node name="ServerIp" type="LineEdit" parent="CanvasLayer/NetworkContainer/NetworkConnect/HBoxContainer/Client/Server"]
+margin_left = 44.0
+margin_right = 102.0
+margin_bottom = 24.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Connect" type="Button" parent="CanvasLayer/NetworkContainer/NetworkConnect/HBoxContainer/Client"]
+margin_top = 28.0
+margin_right = 102.0
+margin_bottom = 48.0
+text = "Connect"
+
+[node name="Server" type="VBoxContainer" parent="CanvasLayer/NetworkContainer/NetworkConnect/HBoxContainer"]
+margin_left = 106.0
+margin_right = 191.0
+margin_bottom = 48.0
+alignment = 2
+
+[node name="StartServer" type="Button" parent="CanvasLayer/NetworkContainer/NetworkConnect/HBoxContainer/Server"]
+margin_top = 28.0
+margin_right = 85.0
+margin_bottom = 48.0
+text = "Start Server"
+
+[node name="InputManager" type="VBoxContainer" parent="CanvasLayer/NetworkContainer"]
+visible = false
 margin_left = 205.0
 margin_top = 131.0
 margin_right = 307.0
 margin_bottom = 169.0
+script = ExtResource( 2 )
 
-[node name="ConnectedCount" type="Label" parent="InputManager/CenterContainer/VBoxContainer"]
+[node name="ConnectedCount" type="Label" parent="CanvasLayer/NetworkContainer/InputManager"]
 margin_right = 102.0
 margin_bottom = 14.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Spawn" type="Button" parent="InputManager/CenterContainer/VBoxContainer"]
+[node name="Spawn" type="Button" parent="CanvasLayer/NetworkContainer/InputManager"]
 margin_top = 18.0
 margin_right = 102.0
 margin_bottom = 38.0
 text = "Spawn Players"
-[connection signal="pressed" from="InputManager/CenterContainer/VBoxContainer/Spawn" to="InputManager" method="on_start"]
+[connection signal="player_changed" from="Server" to="CanvasLayer/NetworkContainer/InputManager" method="update_player_count"]
+[connection signal="connected" from="CanvasLayer/NetworkContainer/NetworkConnect" to="CanvasLayer/NetworkContainer/InputManager" method="show"]
+[connection signal="pressed" from="CanvasLayer/NetworkContainer/NetworkConnect/HBoxContainer/Client/Connect" to="CanvasLayer/NetworkContainer/NetworkConnect" method="connect_server"]
+[connection signal="pressed" from="CanvasLayer/NetworkContainer/NetworkConnect/HBoxContainer/Server/StartServer" to="CanvasLayer/NetworkContainer/NetworkConnect" method="start_server"]
+[connection signal="pressed" from="CanvasLayer/NetworkContainer/InputManager/Spawn" to="." method="start_game"]

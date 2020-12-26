@@ -79,23 +79,23 @@ class TestPlayerInputCreation extends UnitTest:
 		return ev
 
 	func test_create_input_from_keyboard_event():
-		var input = autofree(PlayerInput.new(_keyboard_event(100)))
+		var input = autofree(PlayerInput.new(100, false))
 		assert_false(input.joypad_input)
 		assert_eq(input.device_id, 100)
 
 	func test_create_input_from_joypad_event():
-		var input = autofree(PlayerInput.new(_joypad_event(10)))
+		var input = autofree(PlayerInput.new(10, true))
 		assert_true(input.joypad_input)
 		assert_eq(input.device_id, 10)
 
 	func test_input_from_same_event_same_id_equal():
-		var input = autofree(PlayerInput.new(_keyboard_event(100)))
+		var input = autofree(PlayerInput.new(100, false))
 		assert_true(input.is_player_event(_keyboard_event(100)))
 		
 	func test_input_from_same_event_different_id_not_equal():
-		var input = autofree(PlayerInput.new(_keyboard_event(100)))
+		var input = autofree(PlayerInput.new(100, false))
 		assert_false(input.is_player_event(_keyboard_event(10)))
 		
 	func test_input_from_different_event_same_id_not_equal():
-		var input = autofree(PlayerInput.new(_joypad_event(10)))
+		var input = autofree(PlayerInput.new(10, true))
 		assert_false(input.is_player_event(_keyboard_event(10)))
