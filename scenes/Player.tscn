@@ -89,8 +89,6 @@ anims/Run = SubResource( 5 )
 script = ExtResource( 4 )
 sprite_path = NodePath("../Body/Sprite")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-
 [node name="Body" type="CollisionShape2D" parent="."]
 shape = SubResource( 6 )
 

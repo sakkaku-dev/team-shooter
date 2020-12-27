@@ -12,8 +12,8 @@ var bullet = preload("res://scenes/Bullet.tscn")
 var can_shot = true
 
 func _ready():
-	effect.hide()
-
+	#effect.hide()
+	pass
 
 func shot():
 	if not can_shot: return

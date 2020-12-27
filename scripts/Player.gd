@@ -11,7 +11,6 @@ onready var gravity = ProjectSettings.get_setting("physics/2d/default_gravity") 
 onready var body = $Body
 onready var animation: PlayerAnimation = $AnimationPlayer
 onready var gun = $Body/GunPoint
-onready var camera = $Camera2D
 
 var input: PlayerInput
 var velocity = Vector2.ZERO
@@ -23,10 +22,6 @@ puppet var puppet_motion = Vector2.ZERO
 puppet var puppet_pos = Vector2.ZERO
 
 # TODO: make sure everything is in sync
-
-func _ready():
-	if is_network_master():
-		camera.current = true
 
 func _accept_input() -> bool:
 	return is_network_master() and not is_dead
