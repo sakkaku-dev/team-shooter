@@ -1,4 +1,4 @@
-extends Area2D
+extends Node2D
 
 export var speed = 500
 
@@ -14,9 +14,5 @@ func _physics_process(delta: float):
 		tail.scale.x += 10 * delta
 
 
-func _on_Bullet_body_entered(body):
-	queue_free()
-
-
-func _on_Timer_timeout():
+func free_on_hit(body):
 	queue_free()

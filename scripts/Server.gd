@@ -70,6 +70,7 @@ func _add_new_player(player):
 		player["id"] = get_tree().get_network_unique_id()
 	
 	if not _player_exists(player):
+		print(player)
 		players.append(player)
 		emit_signal("player_changed", players)
 		rpc("_set_players", players)

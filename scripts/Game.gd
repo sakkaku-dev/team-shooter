@@ -5,6 +5,7 @@ onready var network := $CanvasLayer/NetworkContainer
 
 func start_game():
 	if get_tree().is_network_server():
+		print(server.players)
 		rpc("spawn_players")
 
 remotesync func spawn_players():

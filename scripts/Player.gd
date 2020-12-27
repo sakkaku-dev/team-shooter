@@ -17,6 +17,7 @@ var input: PlayerInput
 var velocity = Vector2.ZERO
 var motion = Vector2.ZERO
 var is_crouching = false
+var is_dead = false
 
 puppet var puppet_motion = Vector2.ZERO
 puppet var puppet_pos = Vector2.ZERO
@@ -27,14 +28,17 @@ func _ready():
 	if is_network_master():
 		camera.current = true
 
+func _accept_input() -> bool:
+	return is_network_master() and not is_dead
+
 
 func _unhandled_input(event: InputEvent):
-	if is_network_master():
+	if _accept_input():
 		input.handle_input(event)
 	
 
 func _process(delta: float):
-	if is_network_master():
+	if _accept_input():
 		if input.is_pressed([PlayerInput.ATTACK]):
 			rpc_unreliable("_shot")
 			
@@ -50,6 +54,15 @@ sync func _crouch(value: bool):
 	is_crouching = value
 
 func _physics_process(delta: float):
+	if is_dead:
+		if not is_on_floor():
+			velocity += gravity
+			velocity = move_and_slide(velocity, Vector2.UP)
+			animation.jump()
+		else:
+			animation.died()
+		return
+	
 	if is_network_master():
 		motion = input.get_move_vector()
 		rset_unreliable("puppet_motion", motion)
@@ -67,6 +80,7 @@ func _physics_process(delta: float):
 		body.scale.x = motion.normalized().x
 
 	velocity += gravity
+
 	if not is_on_floor():
 		animation.jump()
 	
@@ -82,3 +96,10 @@ func _physics_process(delta: float):
 			else:
 				animation.idle()
 		velocity = move_and_slide(velocity, Vector2.UP)
+
+
+func _on_Health_zero_health():
+	rpc("die")
+
+sync func die():
+	is_dead = true
