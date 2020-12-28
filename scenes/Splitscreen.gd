@@ -3,6 +3,16 @@ extends ViewportContainer
 onready var viewport = $Viewport
 onready var camera = $Viewport/Camera2D
 
+func _input(event):
+	# Mouse inputs are not captured by the viewports, using workaround from
+	# https://github.com/godotengine/godot/issues/17326#issuecomment-431186323
+	if event is InputEventMouse:
+		var mouseEvent = event.duplicate()
+		mouseEvent.position = get_global_transform().xform_inv(event.global_position)
+		viewport.unhandled_input(mouseEvent)
+	else:
+		viewport.unhandled_input(event)
+
 func add_node(node: Node2D):
 	viewport.add_child(node)
 

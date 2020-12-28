@@ -5,6 +5,11 @@
 [node name="Splitscreen" type="ViewportContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = -0.629974
+margin_top = -1.88988
+margin_right = -0.629974
+margin_bottom = -1.88989
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 stretch = true
@@ -14,6 +19,7 @@ __meta__ = {
 }
 
 [node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 512, 300 )
 handle_input_locally = false
 usage = 0
 render_target_update_mode = 3

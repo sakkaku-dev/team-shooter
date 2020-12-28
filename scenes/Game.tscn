@@ -23,11 +23,12 @@ __meta__ = {
 [node name="MainScreen" parent="Screens" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 0.0
 margin_right = 512.0
 margin_bottom = 300.0
 
 [node name="Viewport" parent="Screens/MainScreen" index="0"]
-size = Vector2( 512, 300 )
 handle_input_locally = false
 
 [node name="World" parent="Screens/MainScreen/Viewport" index="1" instance=ExtResource( 1 )]
