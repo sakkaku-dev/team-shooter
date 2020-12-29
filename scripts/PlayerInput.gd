@@ -37,6 +37,10 @@ func _is_joypad_event(event: InputEvent) -> bool:
 	return event is InputEventJoypadButton or event is InputEventJoypadMotion
 
 
+func get_unique_name() -> String:
+	return str(get_network_master()) + ":" + str(device_id) + ":" + str(joypad_input)
+
+
 func handle_input(event: InputEvent) -> void:
 	if not _is_player_event(event):
 		return
