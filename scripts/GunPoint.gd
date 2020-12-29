@@ -12,8 +12,7 @@ var bullet = preload("res://scenes/Bullet.tscn")
 var can_shot = true
 
 func _ready():
-	#effect.hide()
-	pass
+	effect.hide()
 
 func shot():
 	if not can_shot: return
@@ -22,7 +21,7 @@ func shot():
 	effect.show()
 	var b = bullet.instance()
 	get_tree().current_scene.add_child(b)
-	b.global_position = global_position
+	b.global_position = get_global_transform_with_canvas().origin
 	b.global_rotation_degrees = global_rotation_degrees
 	firerate_timer.start(firerate)
 	effect_timer.start()
