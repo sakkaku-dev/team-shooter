@@ -20,8 +20,8 @@ func shot():
 	can_shot = false
 	effect.show()
 	var b = bullet.instance()
-	get_tree().current_scene.add_child(b)
-	b.global_position = get_global_transform_with_canvas().origin
+	get_viewport().add_child(b)
+	b.global_position = global_position
 	b.global_rotation_degrees = global_rotation_degrees
 	firerate_timer.start(firerate)
 	effect_timer.start()
