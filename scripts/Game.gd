@@ -1,7 +1,7 @@
 extends Node
 
 onready var server := $Server
-onready var network := $GlobalUI/NetworkContainer
+onready var player_select := $GlobalUI/PlayerSelect
 onready var main_screen := $Screens/MainScreen
 onready var screens := $Screens
 
@@ -12,7 +12,7 @@ func start_game():
 		rpc("spawn_players")
 
 remotesync func spawn_players():
-	network.hide()
+	player_select.hide()
 	
 	var current_screen = main_screen
 	

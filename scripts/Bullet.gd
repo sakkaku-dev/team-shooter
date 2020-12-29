@@ -15,4 +15,5 @@ func _physics_process(delta: float):
 
 
 func free_on_hit(body):
+	print("Hit")
 	queue_free()

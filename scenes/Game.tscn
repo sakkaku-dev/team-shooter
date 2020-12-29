@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/World.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/InputManager.gd" type="Script" id=2]
-[ext_resource path="res://scripts/NetworkConnect.gd" type="Script" id=3]
 [ext_resource path="res://scenes/Splitscreen.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scripts/Server.gd" type="Script" id=5]
 [ext_resource path="res://scripts/Game.gd" type="Script" id=6]
@@ -32,90 +31,29 @@ margin_bottom = 300.0
 
 [node name="GlobalUI" type="CanvasLayer" parent="."]
 
-[node name="NetworkContainer" type="CenterContainer" parent="GlobalUI"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="NetworkConnect" type="VBoxContainer" parent="GlobalUI/NetworkContainer"]
-margin_left = 160.0
-margin_top = 126.0
-margin_right = 351.0
-margin_bottom = 174.0
-script = ExtResource( 3 )
-
-[node name="HBoxContainer" type="HBoxContainer" parent="GlobalUI/NetworkContainer/NetworkConnect"]
-margin_right = 191.0
-margin_bottom = 48.0
-
-[node name="Client" type="VBoxContainer" parent="GlobalUI/NetworkContainer/NetworkConnect/HBoxContainer"]
-margin_right = 102.0
-margin_bottom = 48.0
-
-[node name="Server" type="HBoxContainer" parent="GlobalUI/NetworkContainer/NetworkConnect/HBoxContainer/Client"]
-margin_right = 102.0
-margin_bottom = 24.0
-
-[node name="Label" type="Label" parent="GlobalUI/NetworkContainer/NetworkConnect/HBoxContainer/Client/Server"]
-margin_top = 5.0
-margin_right = 40.0
-margin_bottom = 19.0
-text = "Server"
-
-[node name="ServerIp" type="LineEdit" parent="GlobalUI/NetworkContainer/NetworkConnect/HBoxContainer/Client/Server"]
-margin_left = 44.0
-margin_right = 102.0
-margin_bottom = 24.0
-caret_blink = true
-caret_blink_speed = 0.5
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Connect" type="Button" parent="GlobalUI/NetworkContainer/NetworkConnect/HBoxContainer/Client"]
-margin_top = 28.0
-margin_right = 102.0
-margin_bottom = 48.0
-text = "Connect"
-
-[node name="Server" type="VBoxContainer" parent="GlobalUI/NetworkContainer/NetworkConnect/HBoxContainer"]
-margin_left = 106.0
-margin_right = 191.0
-margin_bottom = 48.0
-alignment = 2
-
-[node name="StartServer" type="Button" parent="GlobalUI/NetworkContainer/NetworkConnect/HBoxContainer/Server"]
-margin_top = 28.0
-margin_right = 85.0
-margin_bottom = 48.0
-text = "Start Server"
-
-[node name="InputManager" type="VBoxContainer" parent="GlobalUI/NetworkContainer"]
-visible = false
+[node name="PlayerSelect" type="VBoxContainer" parent="GlobalUI"]
 margin_left = 205.0
 margin_top = 131.0
 margin_right = 307.0
 margin_bottom = 169.0
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="ConnectedCount" type="Label" parent="GlobalUI/NetworkContainer/InputManager"]
+[node name="ConnectedCount" type="Label" parent="GlobalUI/PlayerSelect"]
 margin_right = 102.0
 margin_bottom = 14.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Spawn" type="Button" parent="GlobalUI/NetworkContainer/InputManager"]
+[node name="Spawn" type="Button" parent="GlobalUI/PlayerSelect"]
 margin_top = 18.0
 margin_right = 102.0
 margin_bottom = 38.0
 text = "Spawn Players"
-[connection signal="player_changed" from="Server" to="GlobalUI/NetworkContainer/InputManager" method="update_player_count"]
-[connection signal="connected" from="GlobalUI/NetworkContainer/NetworkConnect" to="GlobalUI/NetworkContainer/InputManager" method="show"]
-[connection signal="pressed" from="GlobalUI/NetworkContainer/NetworkConnect/HBoxContainer/Client/Connect" to="GlobalUI/NetworkContainer/NetworkConnect" method="connect_server"]
-[connection signal="pressed" from="GlobalUI/NetworkContainer/NetworkConnect/HBoxContainer/Server/StartServer" to="GlobalUI/NetworkContainer/NetworkConnect" method="start_server"]
-[connection signal="pressed" from="GlobalUI/NetworkContainer/InputManager/Spawn" to="." method="start_game"]
+[connection signal="player_changed" from="Server" to="GlobalUI/PlayerSelect" method="update_player_count"]
+[connection signal="pressed" from="GlobalUI/PlayerSelect/Spawn" to="." method="start_game"]
 
 [editable path="Screens/MainScreen"]

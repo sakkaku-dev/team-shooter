@@ -81,7 +81,7 @@ Display=8
 [application]
 
 config/name="team-shooter"
-run/main_scene="res://scenes/Game.tscn"
+run/main_scene="res://scenes/gui/Menu.tscn"
 config/icon="res://icon.png"
 
 [display]
