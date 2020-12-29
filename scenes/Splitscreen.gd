@@ -16,5 +16,4 @@ func _input(event):
 func track_player(player: Node2D):
 	var remote_transform = RemoteTransform2D.new()
 	player.add_child(remote_transform)
-	print(player.name + ": " + str(player.get_network_master()) + ", " + str(remote_transform.get_network_master()))
 	remote_transform.remote_path = remote_transform.get_path_to(camera)
