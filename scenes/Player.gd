@@ -99,7 +99,7 @@ func _physics_process(delta: float):
 		animation.crouch()
 	else:
 		if is_on_floor():
-			if input.is_pressed([PlayerInput.JUMP]):
+			if input.is_just_pressed(PlayerInput.JUMP):
 				velocity.y = -jump_force
 				animation.jump()
 			elif abs(velocity.x) > 0.01:

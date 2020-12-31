@@ -65,19 +65,18 @@ func get_players() -> Array:
 	var players = get_players_data()
 	for i in range(players.size()):
 		var player = players[i]
-		var input = _to_player_input(player)
-		var player_node = player_scene.instance(PackedScene.GEN_EDIT_STATE_MAIN)
-		var color = player["color"]
-		player_node.set_color(color)
-		player_node.input = input
+		var is_remote = get_tree().get_network_unique_id() != player["id"]
+		var player_node = player_scene.instance()
+		player_node.input = EmptyPlayerInput.new() if is_remote else _to_player_input(player)
+		player_node.add_child(player_node.input)
+		player_node.set_color(player["color"])
 		player_node.set_network_master(player["id"])
 		player_nodes.append(player_node)
 	return player_nodes
 
 
 func _to_player_input(player):
-	var is_remote = get_tree().get_network_unique_id() != player["id"]
-	var input = PlayerInput.new(player["device"], player["joypad"], is_remote)
+	var input = PlayerInput.new(player["device"], player["joypad"])
 	input.set_network_master(player["id"])
 	return input
 
