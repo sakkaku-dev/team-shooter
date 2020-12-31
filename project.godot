@@ -157,6 +157,10 @@ attack={
 2d_physics/layer_2="player"
 2d_physics/layer_3="player_hurtbox"
 
+[physics]
+
+2d/default_gravity=55
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"
