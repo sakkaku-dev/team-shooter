@@ -2,26 +2,42 @@ extends KinematicBody2D
 
 class_name Player
 
+enum Team {
+	BLACK,
+	BLUE,
+	GREEN,
+	RED,
+	YELLOW,
+}
+
 export var speed = 200
 export var acceleration = 800
 export var friction = 1600
 export var jump_force = 800
 
 onready var gravity = ProjectSettings.get_setting("physics/2d/default_gravity") * ProjectSettings.get_setting("physics/2d/default_gravity_vector")
-onready var body = $Body
-onready var animation: PlayerAnimation = $AnimationPlayer
-onready var gun = $Body/GunPoint
+onready var body := $Body
+onready var animation := $AnimationPlayer
+onready var gun := $Body/GunPoint
 
 var input: PlayerInput
 var velocity = Vector2.ZERO
 var motion = Vector2.ZERO
 var is_crouching = false
 var is_dead = false
+var team_color = Team.BLACK
 
 puppet var puppet_motion = Vector2.ZERO
 puppet var puppet_pos = Vector2.ZERO
 
 # TODO: make sure everything is in sync
+
+func _ready():
+	animation.color = team_color
+
+func set_color(color: String):
+	team_color = Team.get(color)
+
 
 func _accept_input() -> bool:
 	return is_network_master() and not is_dead

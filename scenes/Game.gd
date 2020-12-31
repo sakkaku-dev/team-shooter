@@ -1,7 +1,7 @@
 extends Node
 
-onready var server := $Server
 onready var player_select := $GlobalUI/PlayerSelect
+onready var player_select_manager := $GlobalUI/PlayerSelect/PlayerSelectManager
 onready var main_screen := $Screens/MainScreen
 onready var screens := $Screens
 
@@ -16,7 +16,7 @@ remotesync func spawn_players():
 	
 	var current_screen = main_screen
 	
-	for player in server.get_players():
+	for player in player_select_manager.get_players():
 		var id = player.get_network_master()
 		player.name = player.input.get_unique_name()
 		main_screen.viewport.add_child(player, true)

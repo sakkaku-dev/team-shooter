@@ -18,6 +18,7 @@ func _create_input(input: String, strength = 0, pressed = true) -> InputEvent:
 	ev.strength = strength
 	return ev
 
+
 func joypad_motion_event(axis: int, value: float) -> InputEvent:
 	var joy = InputEventJoypadMotion.new()
 	joy.axis = axis
