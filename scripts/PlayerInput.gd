@@ -14,7 +14,7 @@ func _init(device = 0, joypad = false):
 	self.joypad_input = joypad
 
 
-func _is_player_event(event: InputEvent) -> bool:
+func is_player_event(event: InputEvent) -> bool:
 	return joypad_input == _is_joypad_event(event) and device_id == event.device
 
 
@@ -27,7 +27,7 @@ func get_unique_name() -> String:
 
 
 func handle_input(event: InputEvent) -> void:
-	if not _is_player_event(event):
+	if not is_player_event(event):
 		return
 	
 	.handle_input(event)

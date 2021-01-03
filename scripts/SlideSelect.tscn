@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scripts/SlideSelect.gd" type="Script" id=1]
 [ext_resource path="res://assets/arrow-right.png" type="Texture" id=2]
@@ -6,33 +6,50 @@
 [ext_resource path="res://assets/arrow-right-disabled.png" type="Texture" id=4]
 [ext_resource path="res://assets/arrow-left-disabled.png" type="Texture" id=5]
 
-[node name="SlideSelect" type="HBoxContainer"]
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[node name="PanelContainer" type="PanelContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-alignment = 1
+focus_mode = 2
+custom_styles/panel = SubResource( 1 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PrevButton" type="TextureButton" parent="."]
-visible = false
+[node name="SlideSelect" type="HBoxContainer" parent="."]
+margin_right = 512.0
+margin_bottom = 300.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PrevButton" type="TextureButton" parent="SlideSelect"]
 margin_right = 16.0
 margin_bottom = 300.0
 texture_normal = ExtResource( 3 )
 texture_disabled = ExtResource( 5 )
 
-[node name="Labels" type="CenterContainer" parent="."]
-margin_right = 512.0
+[node name="Labels" type="CenterContainer" parent="SlideSelect"]
+margin_left = 20.0
+margin_right = 492.0
 margin_bottom = 300.0
 size_flags_horizontal = 3
 
-[node name="NextButton" type="TextureButton" parent="."]
-visible = false
+[node name="Label" type="Label" parent="SlideSelect/Labels"]
+margin_left = 219.0
+margin_top = 143.0
+margin_right = 253.0
+margin_bottom = 157.0
+text = "Label"
+
+[node name="NextButton" type="TextureButton" parent="SlideSelect"]
 margin_left = 496.0
 margin_right = 512.0
 margin_bottom = 300.0
 texture_normal = ExtResource( 2 )
 texture_disabled = ExtResource( 4 )
-[connection signal="pressed" from="PrevButton" to="." method="prev_button_pressed"]
-[connection signal="pressed" from="NextButton" to="." method="next_button_pressed"]
+[connection signal="pressed" from="SlideSelect/PrevButton" to="." method="prev_value"]
+[connection signal="pressed" from="SlideSelect/NextButton" to="." method="next_value"]

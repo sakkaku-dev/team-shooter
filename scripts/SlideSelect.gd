@@ -1,14 +1,25 @@
-extends Control
+extends PlayerFocus
 
 signal value_changed(value)
 
 export var values: Array setget _set_values
 
-onready var labels = $Labels
-onready var next_button = $NextButton
-onready var prev_button = $PrevButton
+onready var labels = $SlideSelect/Labels
+onready var next_button = $SlideSelect/NextButton
+onready var prev_button = $SlideSelect/PrevButton
 
 var active_label: int setget _set_active_label
+
+func _ready():
+	hide_buttons()
+
+
+func _unhandled_input(event):
+	if can_handle_event(event) and event.is_pressed():
+		if event.is_action("ui_left"):
+			prev_value()
+		elif event.is_action("ui_right"):
+			next_value()
 
 
 func set_value(value):
@@ -66,9 +77,11 @@ func _update_labels(emit = true):
 		emit_signal("value_changed", values[active_label])
 
 
-func next_button_pressed():
-	self.active_label += 1
+func next_value():
+	if not next_button.disabled:
+		self.active_label += 1
 
 
-func prev_button_pressed():
-	self.active_label -= 1
+func prev_value():
+	if not prev_button.disabled:
+		self.active_label -= 1

@@ -8,11 +8,17 @@ onready var team_container := $MarginContainer/VBoxContainer
 onready var join_key = $MarginContainer/JoinKey
 
 var team: String setget _set_team_color
-var device = 0
-var joypad = false
+var input: PlayerInput setget _set_input
 var _player_set = false
 
+func _set_input(i):
+	input = i
+	team_select.focus_player(i)
+
 func _ready():
+	team_container.hide()
+	join_key.show()
+	
 	team_select.values = Player.Team.keys()
 	if team_select.values.size() > 0:
 		self.team = team_select.values[0]
@@ -63,17 +69,18 @@ func has_player_set() -> bool:
 
 func _apply_player_data(data: Dictionary):
 	set_network_master(data["id"])
-	device = data["device"]
-	joypad = data["joypad"]
+	self.input = PlayerInput.new(data["device"], data["joypad"])
 	if data.has("color"):
 		self.team = data["color"]
 
 func to_player_data() -> Dictionary:
 	var data = {
 		"id": get_network_master(),
-		"device": device,
-		"joypad": joypad,
 		"color": team
 	}
+	
+	if input:
+		data["device"] = input.device_id
+		data["joypad"] = input.joypad_input
 	
 	return data

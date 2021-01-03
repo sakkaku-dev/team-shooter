@@ -48,7 +48,7 @@ margin_bottom = 24.0
 text = "Connect"
 flat = true
 [connection signal="pressed" from="MenuItems/Host" to="." method="start_server"]
-[connection signal="pressed" from="MenuItems/Join" to="MenuItems" method="hide"]
 [connection signal="pressed" from="MenuItems/Join" to="JoinContainer" method="show"]
+[connection signal="pressed" from="MenuItems/Join" to="MenuItems" method="hide"]
 [connection signal="back" from="JoinContainer" to="MenuItems" method="show"]
 [connection signal="pressed" from="JoinContainer/Connect" to="." method="connect_server"]
