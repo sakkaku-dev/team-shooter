@@ -1,4 +1,4 @@
-### Godot Template
+### Team Shooter
 
 #### Things to change
 
